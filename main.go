@@ -68,8 +68,69 @@ func main() {
 
 	case "read":
 		employee.ReadEmployee(employees)
+
+	case "update":
+		// Imprimir los datos existentes en la estructura
+		fmt.Println("---Existing employee data---")
+		for _, employee := range employees {
+			fmt.Printf("%d\t%s\t%s\t%d\t%s\n", employee.Id, employee.Name, employee.Surname, employee.Age, employee.Role)
+		}
+
+		// Solicitar al usuario que ingrese los nuevos datos para actualizar
+		var updateId int
+		fmt.Println()
+		fmt.Print("Enter the employee ID: ")
+		fmt.Scan(&updateId)
+
+		var newName, newSurname, updateRole string
+		var newAge int
+
+		fmt.Print("Enter the new name of the employee: ")
+		fmt.Scan(&newName)
+
+		fmt.Print("Enter the new surname of the employee: ")
+		fmt.Scan(&newSurname)
+
+		fmt.Print("Enter the new age of the employee: ")
+		fmt.Scan(&newAge)
+
+		fmt.Print("Enter the new role of the employee: ")
+		fmt.Scan(&updateRole)
+
+		// Actualizar los datos en la estructura
+		for i, employee := range employees {
+			if employee.Id == updateId {
+				employees[i].Name = newName
+				employees[i].Surname = newSurname
+				employees[i].Age = newAge
+				employees[i].Role = updateRole
+				break
+			}
+		}
+
+		file, err = os.Create("employees.json")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer file.Close()
+
+		err = json.NewEncoder(file).Encode(employees)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("Employee data updated successfully.")
+
+	case "delete":
+
 	}
 
+}
+
+func SaveEmployee(file *os.File, employees []employee.Employee) {
+	panic("unimplemented")
 }
 
 func printUsage() {

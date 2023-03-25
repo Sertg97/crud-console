@@ -45,6 +45,24 @@ func CreateEmployee(employees []Employee, name string, surname string, age int, 
 	return append(employees, newEmployee)
 }
 
+// Update employees
+func UpdateEmployee() {
+	file, err := os.Open("employees.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	var employees []Employee
+	err = json.NewDecoder(file).Decode(&employees)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+}
+
 func GetNextId(employees []Employee) int {
 	if len(employees) == 0 {
 		return 1
