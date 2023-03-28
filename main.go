@@ -40,6 +40,7 @@ func main() {
 
 	if len(os.Args) < 2 {
 		printUsage()
+		return
 	}
 
 	switch os.Args[1] {
@@ -67,7 +68,9 @@ func main() {
 		employee.SaveEmployee(file, employees)
 
 	case "read":
-		employee.ReadEmployee(employees)
+		for _, employee := range employees {
+			fmt.Printf("\nID: %d\n Name: %s\n Surname: %s\n Age: %d\n Role: %s\n", employee.Id, employee.Name, employee.Surname, employee.Age, employee.Role)
+		}
 
 	case "update":
 		// Imprimir los datos existentes en la estructura

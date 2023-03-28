@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
@@ -17,20 +18,17 @@ type Employee struct {
 
 // Read employees
 func ReadEmployee(employees []Employee) {
-	if len(employees) == 0 {
-		fmt.Println("No employees found :(")
+	data, err := ioutil.ReadFile("employees.json")
+	if err != nil {
+		fmt.Println("Error al leer el archivo JSON:", err)
 		return
 	}
 
-	/*for _, employee := range employees {
-
-		status := " "
-		if employee.Name {
-			status = "✔"
-		}
-
-		fmt.Printf("[%s] [%d] [%s]\n", status, employee.Id, employee.Name)
-	}*/
+	err = json.Unmarshal(data, &employees)
+	if err != nil {
+		fmt.Println("Error al decodificar el archivo JSON:", err)
+		return
+	}
 }
 
 // Create employees
