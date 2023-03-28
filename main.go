@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -127,6 +128,44 @@ func main() {
 		fmt.Println("Employee data updated successfully.")
 
 	case "delete":
+		// Solicitar el ID del registro a eliminar
+		var idToDelete int
+		fmt.Print("Employee ID to delete: ")
+		_, err = fmt.Scan(&idToDelete)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		// Buscar y eliminar el registro correspondiente en la estructura Go
+		indexToDelete := -1
+		for i, emp := range employees {
+			if emp.Id == idToDelete {
+				indexToDelete = i
+				break
+			}
+		}
+		if indexToDelete == -1 {
+			fmt.Println("No employees were found")
+			return
+		}
+		employees = append(employees[:indexToDelete], employees[indexToDelete+1:]...)
+
+		// Codificar la estructura Go actualizada de vuelta en formato JSON
+		updatedData, err := json.MarshalIndent(employees, "", "    ")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		// Escribir los datos actualizados en el archivo JSON
+		err = ioutil.WriteFile("employees.json", updatedData, 0644)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("The employee was deleted successfully")
 
 	}
 

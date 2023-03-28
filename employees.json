@@ -1,1 +1,16 @@
-[{"id":1,"name":"Son","surname":"Goku","age":30,"role":"Ingeniero"},{"id":2,"name":"Hannah","surname":"Rose","age":23,"role":"Desing"}]
+[
+    {
+        "id": 1,
+        "name": "Son",
+        "surname": "Goku",
+        "age": 30,
+        "role": "Ingeniero"
+    },
+    {
+        "id": 2,
+        "name": "Hannah",
+        "surname": "Rose",
+        "age": 23,
+        "role": "Desing"
+    }
+]
